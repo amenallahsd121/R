@@ -1,0 +1,75 @@
+1//
+
+# Fixer la graine pour la reproductibilité
+set.seed(2425)
+
+# Générer 1000 réalisations de U
+n1 <- 1000
+U <- runif(n1)
+
+
+2//
+a//
+
+# Générer X en utilisant la méthode d'inversion
+lambda <- 3
+X <- -1 / lambda * log(1 - U)
+
+b//
+
+# Fonction de répartition théorique
+F_theorique <- function(x) {
+  1 - exp(-lambda * x)
+}
+
+# Fonction de répartition empirique (ECDF)
+F_empirique <- ecdf(X)
+
+
+c//
+
+# Calculer la moyenne empirique
+moyenne_empirique <- mean(X)
+print(paste("Moyenne empirique de X :", moyenne_empirique))
+
+3//
+a//
+
+# Générer des réalisations pour n2, n3, n4
+n2 <- 10^4
+n3 <- 10^5
+n4 <- 10^6
+
+U2 <- runif(n2)
+U3 <- runif(n3)
+U4 <- runif(n4)
+
+X2 <- -1 / lambda * log(1 - U2)
+X3 <- -1 / lambda * log(1 - U3)
+X4 <- -1 / lambda * log(1 - U4)
+
+# Calculer les moyennes empiriques
+moyenne_n2 <- mean(X2)
+moyenne_n3 <- mean(X3)
+moyenne_n4 <- mean(X4)
+
+print(paste("Moyenne pour n2 =", moyenne_n2))
+print(paste("Moyenne pour n3 =", moyenne_n3))
+print(paste("Moyenne pour n4 =", moyenne_n4))
+
+b//
+
+# Créer un vecteur des moyennes empiriques
+moyennes <- c(moyenne_empirique, moyenne_n2, moyenne_n3, moyenne_n4)
+n_values <- c(n1, n2, n3, n4)
+
+# Tracer l'évolution
+plot(n_values, moyennes, type = "b", pch = 19, col = "blue",
+     xlab = "Nombre de réalisations", ylab = "Moyenne empirique",
+     main = "Évolution de la moyenne empirique")
+abline(h = 1 / lambda, col = "red", lwd = 2)  # Moyenne théorique
+legend("topright", legend = c("Moyenne empirique", "Moyenne théorique"), col = c("blue", "red"), lwd = 2)
+
+c//
+voir image c
+
