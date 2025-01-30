@@ -1,0 +1,53 @@
+1//
+a//
+# Fixer la graine pour la reproductibilité
+set.seed(2425)
+
+# Générer Z1 et Z2
+n <- 10000
+Z1 <- rnorm(n)
+Z2 <- rnorm(n)
+Z <- cbind(Z1, Z2)
+
+b//
+
+moyenne_Z <- colMeans(Z)
+print(paste("Moyenne empirique de Z :", moyenne_Z))
+
+
+c//
+
+# Nuage de points de Z1 en fonction de Z2
+plot(Z1, Z2, pch = 19, col = rgb(0, 0, 1, 0.1),
+     xlab = "Z1", ylab = "Z2", main = "Nuage de points de Z1 vs Z2")
+
+
+2//
+
+# Définir la matrice de covariance
+Sigma <- matrix(c(2, -0.9, -0.9, 2), nrow = 2, byrow = TRUE)
+
+# Décomposition de Cholesky
+A <- chol(Sigma)
+print("Matrice A :")
+print(A)
+
+
+3//
+a//
+# Générer Y = A * Z
+Y <- Z %*% t(A)
+
+
+b//
+
+# Nuage de points de Y1 vs Y2
+plot(Y[, 1], Y[, 2], pch = 19, col = rgb(1, 0, 0, 0.1),
+     xlab = "Y1", ylab = "Y2", main = "Nuage de points de Y1 vs Y2")
+
+
+c//
+voir image c ex 3
+
+
+
